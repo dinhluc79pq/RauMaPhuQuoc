@@ -93,8 +93,18 @@ export default function Home() {
 
 
   return (
-    <main className="p-6">
-      <h1 className="text-xl font-bold mb-4">🥤 Danh sách sản phẩm</h1>
+    <main className="p-6 pt-0">
+      <div className="category-bar sticky top-0 flex justify-between items-center mb-4 mt-6 p-2 rounded">
+        <h1 className="text-lg font-bold">🥤 Danh sách sản phẩm</h1>
+        <button
+          onClick={() =>
+            document.getElementById("cart-section")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="bg-red-500 text-xl font-bold pl-4 pr-4 rounded"
+        >
+          🛒
+        </button>
+      </div>
 
       {/* Danh sách sản phẩm */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -110,17 +120,17 @@ export default function Home() {
             />
 
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">{p.name}</h2>
+              <h2 className="text-lg font-semibold">{p.name}</h2>
               <p className="text-green-600 font-medium">{formatCurrency(p.price)}</p>
             </div>
 
-            <div className="flex items-center justify-between mt-3">
-              <button
+            <div className="flex items-center justify-end mt-3">
+              {/* <button
                 onClick={() => addToCart(p)}
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
               >
                 ➕ Thêm vào giỏ
-              </button>
+              </button> */}
 
               <div className="flex items-center gap-2">
                 <button
@@ -143,9 +153,9 @@ export default function Home() {
       </div>
 
       {/* Giỏ hàng */}
-      <div className="mt-10 p-4 border rounded-xl shadow">
+      <div id="cart-section" className="mt-10 p-4 border rounded-xl shadow">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">🛒 Giỏ hàng</h2>
+          <h2 className="text-lg font-bold">🛒 Giỏ hàng</h2>
           <button
             onClick={resetCart}
             className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600"
@@ -161,11 +171,11 @@ export default function Home() {
             {cart.map((item, i) => (
               <li
                 key={i}
-                className="flex justify-between border-b pb-2 last:border-0"
+                className="grid grid-cols-[50%_10%_40%] border-b pb-2 last:border-0"
               >
-                <span>{item.name}</span>
-                <span>{item.quantity}</span>
-                <span className="font-medium text-green-600">
+                <span className="truncate">{item.name}</span>
+                <span className="text-center">{item.quantity}</span>
+                <span className="font-medium text-green-600 text-right">
                   {formatCurrency(item.price * item.quantity)}
                 </span>
               </li>

@@ -24,3 +24,8 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.category-bar {
+  background: #77bdca;
+  color: black;
+}
