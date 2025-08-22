@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabaseClient"
+import Footer from "@/components/Footer";
 
 interface Product {
   id: number
@@ -100,7 +101,7 @@ export default function Home() {
           onClick={() =>
             document.getElementById("cart-section")?.scrollIntoView({ behavior: "smooth" })
           }
-          className="bg-red-500 text-xl font-bold pl-4 pr-4 rounded"
+          className="bg-red-500 text-xl font-bold px-4 rounded"
         >
           🛒
         </button>
@@ -187,7 +188,16 @@ export default function Home() {
             Tổng: {formatCurrency(totalPrice)}
           </div>
         )}
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={() => (window.location.href = "/checkout")}
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+          >
+            Thanh toán
+          </button>
+        </div>
       </div>
+      <Footer />
     </main>
   )
 }
