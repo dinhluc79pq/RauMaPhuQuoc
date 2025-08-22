@@ -3,6 +3,16 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 
+interface CartItem {
+  id: number
+  name: string
+  price: number
+  image_url: string
+  quantity: number
+  description?: string;
+}
+
+
 function formatCurrency(amount: number) {
   return amount.toLocaleString("vi-VN") + " VND";
 }
@@ -14,7 +24,7 @@ export default function Checkout() {
     address: "",
     note: "",
   });
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
