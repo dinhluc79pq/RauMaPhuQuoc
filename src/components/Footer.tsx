@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-green-50 border mt-10 rounded">
-      <div className="max-w-6xl mx-auto px-6 py-2 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+    <footer className="bg-green-50 border-t mt-10 rounded">
+      <div className="max-w-6xl mx-auto px-6 py-2 grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
         
         {/* Logo + Tên cửa hàng */}
         <div className="flex flex-col justify-center items-center">
@@ -19,7 +19,7 @@ export default function Footer() {
 
         {/* Thông tin liên hệ */}
         <div className="text-gray-700">
-          <p>📍 Đường Cáp Treo, Khu phố 6, Phường An Thới, Đặc Khu Phú Quốc</p>
+          <p>📍 Đường Cáp Treo - KP 6 - An Thới - Phú Quốc</p>
           <p>📞 Hotline: 0368 568 895</p>
           <p>📧 Mail: dinhluc79pq@gmail.com</p>
         </div>

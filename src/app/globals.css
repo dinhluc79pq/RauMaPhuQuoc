@@ -17,6 +17,11 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
+  .conatiner-theme {
+    background: #0a0a0a;
+    color: #ededed;
+  }
 }
 
 body {
@@ -28,4 +33,6 @@ body {
 .category-bar {
   background: #77bdca;
   color: black;
+  margin-top: 5px;
 }
+

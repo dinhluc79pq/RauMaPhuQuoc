@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 interface CartItem {
   id: number
@@ -66,11 +68,13 @@ export default function Checkout() {
   }
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-semibold mb-4">🧾 Thanh toán</h1>
+    <>
+    <div className="p-6 pt-0 max-w-2xl mx-auto">
+      <Header />
+      <h1 className="text-2xl mt-3 font-semibold text-center mb-4">Thanh toán</h1>
 
       {/* 👉 Giỏ hàng */}
-      <div id="cart-section" className="mt-10 p-4 border rounded-xl shadow">        
+      <div id="cart-section" className="mt-6 p-4 border rounded-xl shadow">        
         {cart.length === 0 ? (
           <p className="text-gray-600">Giỏ hàng trống</p>
         ) : (
@@ -78,7 +82,7 @@ export default function Checkout() {
             {cart.map((item, i) => (
               <li
                 key={i}
-                className="grid grid-cols-[50%_10%_40%] border-b pb-2 last:border-0"
+                className="grid grid-cols-[60%_10%_30%] border-b pb-2 last:border-0"
               >
                 <span className="truncate">{item.name}</span>
                 <span className="text-center">{item.quantity}</span>
@@ -104,6 +108,7 @@ export default function Checkout() {
           className="border p-2 rounded"
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
           required
+          pattern="^(0[0-9]{9})$"
         />
         <input
           type="text"
@@ -134,5 +139,7 @@ export default function Checkout() {
 
       {message && <p className="mt-4">{message}</p>}
     </div>
+    <Footer />
+    </>
   );
 }
