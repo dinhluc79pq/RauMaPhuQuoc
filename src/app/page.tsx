@@ -125,7 +125,7 @@ export default function Home() {
 
               <div className="flex justify-between items-center">
                 <h2 className="text-sm font-semibold">{p.name}</h2>
-                <p className="text-green-600 w-[40%] text-right font-medium">{formatCurrency(p.price)}</p>
+                <p className="text-green-600 w-[40%] text-right font-medium text-sm">{formatCurrency(p.price)}</p>
               </div>
 
               <div className="flex items-center justify-end mt-3">
@@ -162,16 +162,16 @@ export default function Home() {
             <h2 className="text-lg font-bold">🛒 Giỏ hàng</h2>
             <button
               onClick={resetCart}
-              className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600"
+              className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 text-sm"
             >
-              🔄 Reset
+              🔄 Tạo lại
             </button>
           </div>
           
           {cart.length === 0 ? (
             <p className="text-gray-600">Giỏ hàng trống</p>
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-sm">
               {cart.map((item, i) => (
                 <li
                   key={i}
@@ -187,7 +187,7 @@ export default function Home() {
             </ul>
           )}
           {cart.length > 0 && (
-            <div className="mt-4 font-bold text-lg text-right">
+            <div className="mt-4 font-bold text-base text-right">
               Tổng: {formatCurrency(totalPrice)}
             </div>
           )}
