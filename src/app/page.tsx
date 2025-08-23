@@ -124,8 +124,8 @@ export default function Home() {
               />
 
               <div className="flex justify-between items-center">
-                <h2 className="text-base font-semibold">{p.name}</h2>
-                <p className="text-green-600 w-[30%] text-right font-medium">{formatCurrency(p.price)}</p>
+                <h2 className="text-sm font-semibold">{p.name}</h2>
+                <p className="text-green-600 w-[40%] text-right font-medium">{formatCurrency(p.price)}</p>
               </div>
 
               <div className="flex items-center justify-end mt-3">
@@ -139,14 +139,14 @@ export default function Home() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => decreaseFromCart(p)}
-                    className="px-2 py-1 bg-gray-300 rounded"
+                    className="px-1 py-1 bg-gray-300 rounded text-xs"
                   >
                     ➖
                   </button>
                   <span>Đã chọn: {getQuantity(p.id)}</span>
                   <button
                     onClick={() => addToCart(p)}
-                    className="px-2 py-1 bg-gray-300 rounded"
+                    className="px-1 py-1 bg-gray-300 rounded text-xs"
                   >
                     ➕
                   </button>
@@ -175,7 +175,7 @@ export default function Home() {
               {cart.map((item, i) => (
                 <li
                   key={i}
-                  className="grid grid-cols-[55%_5%_40%] border-b pb-2 last:border-0"
+                  className="grid grid-cols-[60%_5%_35%] border-b pb-2 last:border-0"
                 >
                   <span className="truncate">{item.name}</span>
                   <span className="text-center">{item.quantity}</span>

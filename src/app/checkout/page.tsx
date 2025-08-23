@@ -82,7 +82,7 @@ export default function Checkout() {
             {cart.map((item, i) => (
               <li
                 key={i}
-                className="grid grid-cols-[55%_5%_40%] border-b pb-2 last:border-0"
+                className="grid grid-cols-[60%_5%_35%] border-b pb-2 last:border-0"
               >
                 <span className="truncate">{item.name}</span>
                 <span className="text-center">{item.quantity}</span>
