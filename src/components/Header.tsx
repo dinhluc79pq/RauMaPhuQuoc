@@ -8,7 +8,7 @@ export default function Header() {
         {/* Logo + Tên cửa hàng */}
         <div className="flex items-center space-x-3">
           {/* Logo (bạn thay /logo.png bằng logo thật trong /public) */}
-          <Image className="rounded-full shadow" src="/logo.jpg" alt="Rau Má PQ" width={50} height={50} />
+          <Image className="rounded-full shadow h-auto" src="/logo.jpg" priority alt="Rau Má PQ" width={50} height={50} />
           <div>
             <h1 className="text-base font-bold text-green-700">RAU MÁ NGON</h1>
             <p className="text-xs text-gray-600 italic">

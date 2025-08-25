@@ -14,6 +14,25 @@ interface CartItem {
   description?: string;
 }
 
+// types.ts
+export interface Order {
+  id?: number;
+  customer_name: string;
+  phone: string;
+  address: string;
+  note?: string;
+  total_price: number;
+  status: number;      // 0: Đã đặt, 1: Đã xác nhận, 2: Đã giao hàng
+  created_at?: string; // Supabase tự sinh
+}
+
+export interface OrderDetail {
+  id?: number;
+  order_id: number;
+  product_id: number;
+  quantity: number;
+}
+
 
 function formatCurrency(amount: number) {
   return amount.toLocaleString("vi-VN") + " VND";
@@ -40,23 +59,67 @@ export default function Checkout() {
     0
   );
 
+  const placeOrder = async (
+    form: { name: string; phone: string; address: string; note?: string },
+    cart: { id: number; quantity: number }[],
+    totalPrice: number
+  ) => {
+    try {
+      // 1. Insert vào bảng orders
+      const { data: orderData, error: orderError } = await supabase
+        .from("orders") // ✅ dùng type Order thay cho any
+        .insert([
+          {
+            customer_name: form.name,
+            phone: form.phone,
+            address: form.address,
+            note: form.note,
+            total_price: totalPrice,
+            status: 0,
+          },
+        ])
+        .select("id")
+        .single();
+
+      if (orderError) throw orderError;
+
+      const orderId = orderData.id!;
+
+      // 2. Insert vào order_details
+      const orderDetails: OrderDetail[] = cart.map((item) => ({
+        order_id: orderId,
+        product_id: item.id,
+        quantity: item.quantity,
+      }));
+
+      const { error: detailsError } = await supabase
+        .from("order_details")
+        .insert(orderDetails);
+
+      if (detailsError) throw detailsError;
+      return { success: true, orderId };
+    } catch (err) {
+      console.error("Insert order failed:", err);
+      return { success: false, error: err };
+    }
+  };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const result = await placeOrder(form, cart, totalPrice);
 
-    const { error } = await supabase.from("orders").insert([
-      {
-        customer_name: form.name,
-        phone: form.phone,
-        address: form.address,
-        note: form.note,
-        items: cart,
-        total_price: totalPrice,
-      },
-    ]);
+    // const { error } = await supabase.from("orders").insert([
+    //   {
+    //     customer_name: form.name,
+    //     phone: form.phone,
+    //     address: form.address,
+    //     note: form.note,
+    //     items: cart,
+    //     total_price: totalPrice,
+    //   },
+    // ]);
 
-    if (error) {
-      setMessage("❌ Lỗi khi đặt hàng!");
-    } else {
+    if (result.success) {
       localStorage.removeItem("cart");
       setCart([]);
       setMessage("✅ Đặt hàng thành công!");
@@ -64,6 +127,9 @@ export default function Checkout() {
       setTimeout(() => {
         window.location.href = "/";
       }, 1000);
+
+    } else {
+      setMessage("❌ Lỗi khi đặt hàng!");
     }
   }
 
@@ -78,7 +144,7 @@ export default function Checkout() {
         {cart.length === 0 ? (
           <p className="text-gray-600">Giỏ hàng trống</p>
         ) : (
-          <ul className="space-y-2">
+          <ul className="space-y-2 text-sm">
             {cart.map((item, i) => (
               <li
                 key={i}
