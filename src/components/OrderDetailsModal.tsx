@@ -43,22 +43,21 @@ export default function OrderDetailsModal({
 
     const loadDetails = async (oid: number) => {
         setLoading(true);
-        // Yêu cầu: đã có FK order_details.product_id -> products.id
-        // Dùng alias để lấy product
-        const { data, error } = await supabase
-        .from("order_details")
-        .select("id, quantity, product:products(id, name, price)")
-        .eq("order_id", oid);
 
-        if (!error && data) {
-        setRows(
-            data.map((r: any) => ({
-            id: r.id,
-            quantity: r.quantity,
-            product: r.product,
-            }))
-        );
+        // Lấy dữ liệu từ Supabase với alias "product"
+        const { data, error } = await supabase
+            .from("order_details")
+            .select("id, quantity, product:products(id, name, price)")
+            .eq("order_id", oid)
+            .returns<DetailRow[]>(); // ✅ ép kiểu trả về
+
+        if (error) {
+            console.error("Lỗi khi load order_details:", error);
+            setRows([]);
+        } else if (data) {
+            setRows(data);
         }
+
         setLoading(false);
     };
 
