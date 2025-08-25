@@ -23,10 +23,12 @@ const statusText: Record<Order["status"], string> = {
   2: "Đã giao hàng",
 };
 
-const statusMap: Record<0 | 1 | 2, { text: string; className: string }> = {
-  0: { text: "Đã đặt", className: "bg-white text-black" },
-  1: { text: "Đã nhận", className: "bg-yellow-200 text-yellow-800" },
-  2: { text: "Đã giao hàng", className: "bg-blue-200 text-blue-800" },
+type Status = 0 | 1 | 2;
+
+const statusMap: Record<Status, { text: string; className: string }> = {
+  0: { text: "Đã đặt", className: "bg-white" },
+  1: { text: "Đã nhận", className: "bg-yellow-200" },
+  2: { text: "Đã giao hàng", className: "bg-blue-200" },
 };
 
 export default function OrdersPage() {
@@ -250,11 +252,13 @@ export default function OrdersPage() {
                         handleStatusChange(o.id, Number(e.target.value) as 0|1|2)}
                         className={`border p-2 rounded w-40 ${statusMap[o.status].className}`}
                     >
-                        {Object.entries(statusMap).map(([value, { text, className }]) => (
+                        {(Object.entries(statusMap) as [string, { text: string; className: string }][]).map(
+                          ([value, { text, className }]) => (
                             <option key={value} value={value} className={className}>
-                            {text}
+                              {text}
                             </option>
-                        ))}
+                          )
+                        )}
                     </select>
                   </td>
                   <td className="p-2 text-sm text-gray-600">
